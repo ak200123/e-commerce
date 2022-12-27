@@ -15,7 +15,7 @@ export const FilterContextProvider = ({ children }) => {
     const { products } = MyGlobalProviderApi();
     // console.log(products);
     const [state, dispatch] = useReducer(reducer, initialState);
-    // set to the grid view 
+    // set to the grid view let 
     const setGridView = () => {
         return dispatch({ type: "SET_GRIDVIEW" })
     }
@@ -24,15 +24,16 @@ export const FilterContextProvider = ({ children }) => {
     }
 
     // sorting functon 
-    const sorting = () => {
-        dispatch({ type: "GET_SORT_VALUE" });
+    const sorting = (event) => {
+        let userValue = event.target.value;
+        dispatch({ type: "GET_SORT_VALUE", payload: userValue });
     };
 
 
     // to sort the products 
     useEffect(() => {
-        dispatch({ type: "SORTING_PRODUCTS", payload: products })
-    }, [state.sorting_value])
+        dispatch({ type: "SORTING_PRODUCTS" })
+    }, [products, state.sorting_value])
 
     useEffect(() => {
         dispatch({ type: "LOAD_FILTER_PRODUCTS", payload: products });
