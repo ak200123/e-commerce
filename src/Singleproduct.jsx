@@ -1,54 +1,137 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components';
-// import PageNavigation from './components/PageNavigation';
+import PageNavigation from './components/PageNavigation';
 import { MyGlobalProviderApi } from './context/Contextapi';
-
+import Formatprice from './helper/FormatPrice';
+import MyImage from './Myimage';
+import { MdSecurity } from "react-icons/md";
+import { TbTruckDelivery, TbReplace } from "react-icons/tb";
+import Star from './components/Star';
+import AddToCart from './components/AddToCart';
 
 const API = "https://api.pujakaitem.com/api/products";
 export default function Singleproduct() {
-    const { GetSingleProducts, isSingleLoading, singleProduct } = MyGlobalProviderApi();
-    console.log(singleProduct);
-    const { id } = useParams();
-    console.log(id);
-    const {
-        id: aditya,
-        name,
-        company,
-        price,
-        description,
-        category,
-        stock,
-        stars,
-        reviews,
-        image
-    } = singleProduct;
+  const { GetSingleProducts, isSingleLoading, singleProduct } = MyGlobalProviderApi();
+  console.log(singleProduct);
+  const { id } = useParams();
+  console.log(id);
+  const {
+    id: aditya,
+    name,
+    company,
+    price,
+    description,
+    category,
+    stock,
+    stars,
+    reviews,
+    image
+  } = singleProduct;
 
-    useEffect(() => {
-        GetSingleProducts(`${API}?id=${id}`);
+  useEffect(() => {
+    GetSingleProducts(`${API}?id=${id}`);
 
-    }, []);
+  }, []);
 
-    if (isSingleLoading) {
-        return <div className="page_loading">Loading....</div>;
-    }
-    return (
-        <>
-            {name}
-        </>
-    )
+  return (
+    <>
+      <Wrapper>
+        <PageNavigation title={name} />
+        <div className="container">
+
+          <div className="grid grid-two-column">
+            {/* product Images  */}
+            <div className="product_images">
+              <MyImage imgs={image} />
+            </div>
+
+            {/* product dAta  */}
+            <div className="product-data">
+              <h2>{name}</h2>
+
+              <Star stars={stars} reviews={reviews} />
+
+
+              <p className="product-data-price">
+                MRP:
+                <del>
+                  <Formatprice price={price + 250000} />
+                </del>
+              </p>
+              <p className="product-data-price product-data-real-price">
+                Deal of the Day: <Formatprice price={price} />
+              </p>
+              <p>{description}</p>
+              <div className="product-data-warranty">
+                <div className="product-warranty-data">
+                  <TbTruckDelivery className="warranty-icon" />
+                  <p>Free Delivery</p>
+                </div>
+
+                <div className="product-warranty-data">
+                  <TbReplace className="warranty-icon" />
+                  <p>30 Days Replacement</p>
+                </div>
+
+                <div className="product-warranty-data">
+                  <TbTruckDelivery className="warranty-icon" />
+                  <p>Thapa Delivered </p>
+                </div>
+
+                <div className="product-warranty-data">
+                  <MdSecurity className="warranty-icon" />
+                  <p>2 Year Warranty </p>
+                </div>
+              </div>
+
+              <div className="product-data-info">
+                <p>
+                  Available:
+                  <span> {stock > 0 ? "In Stock" : "Not Available"}</span>
+                </p>
+                <p>
+                  ID : <span> {id} </span>
+                </p>
+                <p>
+                  Brand :<span> {company} </span>
+                </p>
+              </div>
+
+              <hr />
+              {stock > 0 && <AddToCart product={singleProduct} />}
+
+            </div>
+          </div>
+
+
+        </div>
+      </Wrapper>
+    </>
+  )
 }
 
 const Wrapper = styled.section`
   .container {
     padding: 9rem 0;
   }
+  .grid {
+  display: grid;
+  gap: 1rem;
+}
+.grid-two-column {
+  grid-template-columns: repeat(2, 1fr);
+}
+  .product_images {
+    display: flex;
+    align-items: center;
+  }
   .product-data {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 2rem;
+    gap: 0.4rem;
     .product-data-warranty {
       width: 100%;
       display: flex;
@@ -59,7 +142,8 @@ const Wrapper = styled.section`
       .product-warranty-data {
         text-align: center;
         .warranty-icon {
-          background-color: rgba(220, 220, 220, 0.5);
+          background-color: #f1ffff;
+          color:hsl(191 53% 59% / 1);
           border-radius: 50%;
           width: 4rem;
           height: 4rem;
@@ -75,7 +159,7 @@ const Wrapper = styled.section`
       font-weight: bold;
     }
     .product-data-real-price {
-      color: red ;
+      color: hsl(191 53% 59% / 1);
     }
     .product-data-info {
       display: flex;
@@ -95,6 +179,12 @@ const Wrapper = styled.section`
     }
   }
   .product-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .page_loading {
+    font-size: 3.2rem;
     display: flex;
     justify-content: center;
     align-items: center;

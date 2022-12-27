@@ -11,7 +11,7 @@ const initialState = {
     products: [],
     featureProducts: [],
     isSingleLoading: false,
-    singleProducts: {},
+    singleProduct: {},
     isSingleError: false,
 }
 

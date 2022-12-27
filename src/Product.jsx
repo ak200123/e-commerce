@@ -17,7 +17,7 @@ const Product = (props) => {
                     <div className="products-image">
 
                         <span className='company'>{company}</span>
-                        <img src={image} alt="" />
+                        <img src={image} alt="" className='myimage' />
                     </div>
                     <div className='d-flex justify-content-between p-3 text-dark'>
                         <span>{name}</span>
@@ -35,20 +35,20 @@ const Wrapper = styled.section`
 .products-card{
     background-color: white;
     border-radius: 1.5rem;
-    padding: 1.5rem;
-    width: 25rem;
+    padding: 1rem;
+    width: 14rem;
     span{
-        font-size: 1.4rem;
+        font-size: 0.9rem;
     }
     .price{
         color: #b41010;
 
     }
-    height: 22rem;
+    height: 14rem;
     .products-image{
         overflow: hidden;
         border-radius: 0.5rem;
-        img{
+        .myimage{
             width: 100%;
             transition: all 0.2s linear;
             &:hover{
@@ -56,7 +56,7 @@ const Wrapper = styled.section`
         }
     }
     .company{
-        font-size: 1.2rem;
+        font-size: 0.9rem;
         border: none;
         text-transform: capitalize;
         color: black;
