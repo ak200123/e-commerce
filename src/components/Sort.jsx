@@ -11,16 +11,16 @@ const Sort = () => {
       <div className="sorting-list--grid">
         <button className={grid_view ? 'active sort-btn' : "sort-btn"}
           onClick={setGridView}>
-          <BsFillGridFill className='icon' />
+          <BsList className='icon' />
         </button>
 
         <button className={!grid_view ? ' active sort-btn' : " sort-btn"}
           onClick={setListView}>
-          <BsList className='icon' />
+          <BsFillGridFill className='icon' />
         </button>
       </div>
       <div className="product-data">
-        {/* {`${filter_products.length} products available`} */}
+        {`${filter_products.length} products available`}
       </div>
 
 
